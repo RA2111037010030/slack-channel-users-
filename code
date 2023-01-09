@@ -1,0 +1,14 @@
+import os
+import requests
+
+CHANNEL_NAME='general' # Your channel here
+
+channel_list = requests.get('https://slack.com/api/conversations.list?token=%s&types=%s' % (SLACK_API_TOKEN, 'public_channel,private_channel,im,mpim')).json()['channels']
+for c in channel_list:
+    if 'name' in c and c['name'] == CHANNEL_NAME:
+        channel = c
+
+members = requests.get('https://slack.com/api/conversations.members?channel=%s' % (channel['id'])).json()['members']
+users_list = requests.get('https://slack.com/api/users.list?token=%s' % CHANNEL_NAME).json()['members']
+
+        print(user['profile'])
